@@ -53,7 +53,7 @@ class AuthBloc {
     /// When the bloc is instantiated it will check for a stored auth token.
     /// If there is no token, we register the application. If there is a token
     /// it gets added to [_token]
-    storage?.fetchToken.then((String token) async {
+    storage?.fetchToken.then((String? token) async {
       final savedToken = mastodon.token ?? token;
 
       _app.listen(_handleApplication);
@@ -192,5 +192,5 @@ class AuthBloc {
 abstract class AuthStorageDelegate {
   Future<void> saveToken(String token);
   Future<void> deleteToken();
-  Future<String> get fetchToken;
+  Future<String?> get fetchToken;
 }

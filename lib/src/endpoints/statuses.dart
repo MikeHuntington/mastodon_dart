@@ -110,7 +110,7 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
         "in_reply_to_id": inReplyToId,
         "media_ids": mediaIds,
         "sensitive": "$sensitive",
-        "visibility": visibility?.toString()?.split(".")?.last,
+        "visibility": visibility?.toString().split(".").last,
         "scheduled_at": scheduledAt?.toIso8601String(),
         "language": language?.toString(),
       },
