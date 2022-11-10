@@ -25,7 +25,7 @@ class NullInterceptorSink<T> extends DelegatingStreamSink<T> {
 /// their auth code, user authentication will be performed with that code.
 class AuthBloc {
   /// Handles the storing, retrieving, and deleting of the auth code
-  final AuthStorageDelegate storage;
+  final AuthStorageDelegate? storage;
 
   /// A Mastodon instance
   final Mastodon mastodon;
@@ -53,7 +53,7 @@ class AuthBloc {
     /// When the bloc is instantiated it will check for a stored auth token.
     /// If there is no token, we register the application. If there is a token
     /// it gets added to [_token]
-    storage.fetchToken.then((String token) async {
+    storage?.fetchToken.then((String token) async {
       final savedToken = mastodon.token ?? token;
 
       _app.listen(_handleApplication);
@@ -74,17 +74,17 @@ class AuthBloc {
   }
 
   final _initalized = Completer();
-  final _account = BehaviorSubject<Account>();
-  final _app = BehaviorSubject<AuthenticatedApplication>();
-  final _code = BehaviorSubject<String>();
-  final _uri = BehaviorSubject<Uri>();
-  final _token = BehaviorSubject<String>();
+  final _account = BehaviorSubject<Account?>();
+  final _app = BehaviorSubject<AuthenticatedApplication?>();
+  final _code = BehaviorSubject<String?>();
+  final _uri = BehaviorSubject<Uri?>();
+  final _token = BehaviorSubject<String?>();
 
-  Sink<String> get codeSink => NullInterceptorSink(_code.sink);
+  Sink<String?> get codeSink => NullInterceptorSink(_code.sink);
 
-  ValueStream<Account> get account => _account.stream;
-  ValueStream<Uri> get uri => _uri.stream;
-  ValueStream<String> get token => _token.stream;
+  ValueStream<Account?> get account => _account.stream;
+  ValueStream<Uri?> get uri => _uri.stream;
+  ValueStream<String?> get token => _token.stream;
   bool get hasAccount => _account.value != null;
   Future get initalized => _initalized.future;
 
@@ -101,14 +101,14 @@ class AuthBloc {
   /// Generate the Uri needed to authenticate the app. This
   /// uri will be navigated to for the user, preferably in an
   /// external browser to improve security.
-  void _handleApplication(AuthenticatedApplication app) {
+  void _handleApplication(AuthenticatedApplication? app) {
     assert(app?.clientId != null && app?.clientSecret != null);
 
     final uri = mastodon.authorizationUrl.replace(
       queryParameters: {
         "response_type": "code",
-        "client_id": app.clientId,
-        "client_secret": app.clientSecret,
+        "client_id": app?.clientId,
+        "client_secret": app?.clientSecret,
         "redirect_uri": redirectUris,
         "scope": scopes.join(" "),
       },
@@ -123,7 +123,7 @@ class AuthBloc {
   ///
   /// If the code validates, it will automatically trigger the
   /// authentication process. It does not wait for confirmation.
-  void _handleCode(String code, AuthenticatedApplication app) {
+  void _handleCode(String? code, AuthenticatedApplication? app) {
     if (code == null || app == null) {
       return;
     }
@@ -139,7 +139,7 @@ class AuthBloc {
       },
     ).then((authResponse) {
       print(authResponse.body);
-      final results = Token.fromJson(jsonDecode(authResponse?.body));
+      final results = Token.fromJson(jsonDecode(authResponse.body));
 
       final token = results.accessToken;
 
@@ -150,10 +150,10 @@ class AuthBloc {
 
   /// Saves, sets, and verifies a token.
   /// Then adds the [Account] to [_account.add]
-  Future<void> _handleToken(String token) async {
+  Future<void> _handleToken(String? token) async {
     if (token != null) {
-      if (token != await storage.fetchToken) {
-        await storage.saveToken(token);
+      if (token != await storage?.fetchToken) {
+        await storage?.saveToken(token);
       }
 
       mastodon.token = token;
@@ -167,7 +167,7 @@ class AuthBloc {
   /// Handles logging the user out. Deletes the stored auth token, wipes the values
   /// from the code, token, and account streams
   Future<void> logOut() async {
-    storage.deleteToken();
+    storage?.deleteToken();
     _code.value = null;
     _token.value = null;
     _account.value = null;

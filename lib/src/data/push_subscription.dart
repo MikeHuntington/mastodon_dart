@@ -7,19 +7,19 @@ part 'push_subscription.g.dart';
 /// https://docs.joinmastodon.org/entities/push-subscription/
 
 @JsonSerializable(
-  nullable: false,
+  
   createToJson: false,
   fieldRename: FieldRename.snake,
 )
 class PushSubscription {
   /// The id of the push subscription in the database
-  final String id;
+  final String? id;
 
   /// Where push alerts will be sent to
-  final Uri endpoint;
+  final Uri? endpoint;
 
   /// The streaming server's VAPID key
-  final String serverKey;
+  final String? serverKey;
 
   /// Which alerts should be delivered to the [endpoint]
   final dynamic alerts;

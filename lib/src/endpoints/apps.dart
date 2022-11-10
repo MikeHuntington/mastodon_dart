@@ -8,11 +8,11 @@ mixin Apps on Authentication, Utilities implements MockApps {
   /// Create a new application to obtain OAuth2 credentials.
   ///
   /// POST /api/v1/apps
-  Future<AuthenticatedApplication> appCredentials(
+  Future<AuthenticatedApplication?> appCredentials(
     Uri website, [
-    String redirectUris = "urn:ietf:wg:oauth:2.0:oob",
-    String clientName = "mastodon-dart",
-    List<String> scopes = const ["write", "read", "follow", "push"],
+    String? redirectUris = "urn:ietf:wg:oauth:2.0:oob",
+    String? clientName = "mastodon-dart",
+    List<String>? scopes = const ["write", "read", "follow", "push"],
   ]) async {
     final response = await request(
       Method.post,
@@ -20,7 +20,7 @@ mixin Apps on Authentication, Utilities implements MockApps {
       payload: {
         "client_name": clientName,
         "redirect_uris": redirectUris,
-        "scopes": scopes.join(" "),
+        "scopes": scopes?.join(" "),
         "website": website.toString(),
       },
     );

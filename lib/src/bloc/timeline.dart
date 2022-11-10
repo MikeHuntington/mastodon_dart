@@ -1,11 +1,11 @@
 import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:rxdart/rxdart.dart';
 
-typedef StatusGetter = Future<List<Status>> Function(String maxId);
+typedef StatusGetter = Future<List<Status>> Function(String? maxId);
 
 class TimelineBloc {
   final StatusGetter fetchStatuses;
-  final Stream<dynamic> statusStream;
+  final Stream<dynamic>? statusStream;
 
   TimelineBloc(this.fetchStatuses, {this.statusStream}) {
     _requestingMore
@@ -19,11 +19,11 @@ class TimelineBloc {
   final Map<String, Status> _store = {};
 
   final _requestingMore = BehaviorSubject<bool>.seeded(true);
-  final _statuses = BehaviorSubject<List<Status>>();
+  final BehaviorSubject<List<Status>?>? _statuses = BehaviorSubject<List<Status>>();
 
   Sink<bool> get requestingMoreSink => _requestingMore.sink;
 
-  ValueStream<List<Status>> get statuses => _statuses;
+  ValueStream<List<Status>?>? get statuses => _statuses;
 
   /// If we're requesting more, find the oldest id in the list,
   _handleRequest(bool isRequestingMore) async {
@@ -33,7 +33,7 @@ class TimelineBloc {
       List<Status> newStatuses = [];
 
       if (hasStatuses) {
-        final oldestId = _statuses.value.last.id;
+        final oldestId = _statuses?.value?.last.id;
 
         newStatuses = await fetchStatuses(oldestId);
       } else {
@@ -41,7 +41,7 @@ class TimelineBloc {
       }
 
       if (newStatuses.isNotEmpty) {
-        newStatuses.forEach((s) => _store[s.id] = s);
+        newStatuses.forEach((s) => _store[s.id!] = s);
         _updateStatuses();
       }
 
@@ -54,7 +54,7 @@ class TimelineBloc {
     if (payload is String) {
       _store.remove(payload);
     } else if (payload is Status) {
-      _store[payload.id] = payload;
+      _store[payload.id!] = payload;
     } else {
       return;
     }
@@ -65,8 +65,8 @@ class TimelineBloc {
   /// Sort [_store.values] and emit a new event to [_statuses]
   _updateStatuses() {
     final _sortedStatuses = _store.values.toList()
-      ..sort((a, b) => b.id.compareTo(a.id));
+      ..sort((a, b) => b.id!.compareTo(a.id!));
 
-    _statuses.add(_sortedStatuses);
+    _statuses?.add(_sortedStatuses);
   }
 }

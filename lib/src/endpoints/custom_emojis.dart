@@ -13,7 +13,7 @@ mixin CustomEmojis on Authentication, Utilities implements MockCustomEmojis {
       "/api/v1/custom_emojis",
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     return body.map((m) => Emoji.fromJson(m)).toList();
   }

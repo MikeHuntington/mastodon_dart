@@ -71,11 +71,11 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
   /// - authenticated (requires user)
   /// - write write:accounts
   Future<Account> updateCredentials({
-    String displayName,
-    String note,
+    String? displayName,
+    String? note,
     dynamic avatar,
     dynamic header,
-    bool locked,
+    bool? locked,
     dynamic sourcePrivacy,
     dynamic sourceSensitive,
     dynamic sourceLanguage,
@@ -123,7 +123,7 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
       },
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     /// TODO: implement link headers for pagination
 
@@ -146,7 +146,7 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
       },
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     /// TODO: implement link headers for pagination
 
@@ -164,9 +164,9 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
     bool onlyMedia = false,
     bool pinned = false,
     bool excludeReplies = false,
-    String maxId,
-    String sinceId,
-    String minId,
+    String? maxId,
+    String? sinceId,
+    String? minId,
     int limit = 20,
     bool excludeReblogs = false,
   }) async {
@@ -185,7 +185,7 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
       },
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     /// TODO: implement link headers for pagination
 
@@ -243,7 +243,7 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
       },
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     return body.map((m) => Relationship.fromJson(m)).toList();
   }
@@ -272,7 +272,7 @@ mixin Accounts on Authentication, Utilities implements MockAccounts {
       },
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     return body.map((m) => Account.fromJson(m)).toList();
   }

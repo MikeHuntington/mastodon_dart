@@ -14,7 +14,7 @@ mixin Lists on Authentication, Utilities implements MockLists {
       authenticated: true,
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     return body.map((m) => UserFollowsList.fromJson(m)).toList();
   }
@@ -30,7 +30,7 @@ mixin Lists on Authentication, Utilities implements MockLists {
       authenticated: true,
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     return body.map((m) => UserFollowsList.fromJson(m)).toList();
   }
@@ -49,7 +49,7 @@ mixin Lists on Authentication, Utilities implements MockLists {
       },
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     return body.map((m) => Account.fromJson(m)).toList();
   }

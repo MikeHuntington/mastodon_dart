@@ -7,22 +7,21 @@ part 'featured_tag.g.dart';
 /// https://docs.joinmastodon.org/entities/featuredtag/
 
 @JsonSerializable(
-  nullable: true,
   createToJson: false,
   fieldRename: FieldRename.snake,
 )
 class FeaturedTag {
   /// The internal ID of the featured tag in the database
-  final String id;
+  final String? id;
 
   /// The name of the hashtag being featured
-  final String name;
+  final String? name;
 
   /// The number of authored statuses containing this hashtag
-  final int statusesCount;
+  final int? statusesCount;
 
   /// The timestamp of the last authored status containing this hashtag
-  final DateTime lastStatusAt;
+  final DateTime? lastStatusAt;
 
   FeaturedTag({
     this.id,

@@ -7,61 +7,61 @@ part 'card.g.dart';
 /// https://docs.joinmastodon.org/entities/card/
 
 @JsonSerializable(
-  nullable: false,
+  
   createToJson: false,
   fieldRename: FieldRename.snake,
 )
 class Card {
   /// Location of linked resource
-  final Uri url;
+  final Uri? url;
 
   /// Title of linked resource
-  final String title;
+  final String? title;
 
   /// Description of preview
-  final String description;
+  final String? description;
 
   /// The type of the preview card. Enumerated by [CardType]
   /// - link = Link OEmbed
   /// - photo = Photo OEmbed
   /// - video = Video OEmbed
   /// - rich = iframe OEmbed. Not currently accepted, so won't show up in practice.
-  final CardType type;
+  final CardType? type;
 
   /// The author of the original resource
-  @JsonKey(nullable: true)
-  final String authorName;
+  @JsonKey()
+  final String? authorName;
 
   /// A link to the author of the original resource
-  @JsonKey(nullable: true)
-  final Uri authorUrl;
+  @JsonKey()
+  final Uri? authorUrl;
 
   /// The provider of the original resource
-  @JsonKey(nullable: true)
-  final String providerName;
+  @JsonKey()
+  final String? providerName;
 
   /// A link to the provider of the original resource
-  @JsonKey(nullable: true)
-  final Uri providerUrl;
+  @JsonKey()
+  final Uri? providerUrl;
 
   /// HTML to be used for generating the preview card
-  @JsonKey(nullable: true)
-  final String html;
+  @JsonKey()
+  final String? html;
 
   /// Width of preview, in pixels
-  @JsonKey(nullable: true)
-  final int width;
+  @JsonKey()
+  final int? width;
 
   /// Height of preview, in pixels
-  @JsonKey(nullable: true)
-  final int height;
+  @JsonKey()
+  final int? height;
 
   /// Preview thumbnail
-  @JsonKey(nullable: true)
-  final Uri image;
+  @JsonKey()
+  final Uri? image;
 
   /// Used for photo embeds, instead of custom [html]
-  final Uri embedUrl;
+  final Uri? embedUrl;
 
   Card({
     this.url,

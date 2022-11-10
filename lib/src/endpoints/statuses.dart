@@ -34,7 +34,7 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   ///
   /// - public
   /// - read read:statuses
-  Future<Card> card(String id) async {
+  Future<Card?> card(String id) async {
     final response = await request(
       Method.get,
       "/api/v1/statuses/$id/card",
@@ -62,7 +62,7 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
       },
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     return body.map((m) => Account.fromJson(m)).toList();
   }
@@ -80,7 +80,7 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
       },
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     return body.map((m) => Account.fromJson(m)).toList();
   }
@@ -90,13 +90,13 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - authenticated
   /// - write write:statuses
   Future<Status> publishStatus({
-    String status,
-    String inReplyToId,
-    List<String> mediaIds,
-    bool sensitive = false,
-    String spoilerText,
-    Visibility visibility,
-    DateTime scheduledAt,
+    String? status,
+    String? inReplyToId,
+    List<String>? mediaIds,
+    bool? sensitive = false,
+    String? spoilerText,
+    Visibility? visibility,
+    DateTime? scheduledAt,
     dynamic language,
   }) async {
     assert(status != null || (mediaIds != null && mediaIds.isNotEmpty));
@@ -143,7 +143,7 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
   /// - authenticated
   /// - write write:statuses
   Future<Status> reblog(String id) async {
-    Response response;
+    Response? response;
 
     try {
       response = await request(
@@ -158,7 +158,7 @@ mixin Statuses on Authentication, Utilities implements MockStatuses {
       }
     }
 
-    return Status.fromJson(json.decode(response.body));
+    return Status.fromJson(json.decode(response!.body));
   }
 
   /// POST /api/v1/statuses/:id/unreblog

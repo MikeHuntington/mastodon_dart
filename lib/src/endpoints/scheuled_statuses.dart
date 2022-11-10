@@ -16,7 +16,7 @@ mixin ScheduledStatuses
       authenticated: true,
     );
 
-    final body = List<Map>.from(json.decode(response.body));
+    final body = List<Map<String,dynamic>>.from(json.decode(response.body));
 
     return body.map((m) => ScheduledStatus.fromJson(m)).toList();
   }
@@ -40,7 +40,7 @@ mixin ScheduledStatuses
   /// - authenticated (requires user)
   /// - write write:statuses
   Future<ScheduledStatus> updateScheduledStatus(String id,
-      {DateTime scheduledAt}) async {
+      {DateTime? scheduledAt}) async {
     final response = await request(
       Method.put,
       "/api/v1/scheduled_statuses/$id",

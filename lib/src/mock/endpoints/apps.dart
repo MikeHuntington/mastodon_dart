@@ -3,11 +3,11 @@ import 'package:mastodon_dart/mastodon_dart.dart';
 class MockApps {
   /// POST /api/v1/apps
   /// https://docs.joinmastodon.org/api/rest/apps/#post-api-v1-apps
-  Future<AuthenticatedApplication> appCredentials(
+  Future<AuthenticatedApplication?> appCredentials(
     Uri website, [
-    String clientName,
-    String redirectUris,
-    List<String> scopes,
+    String? clientName,
+    String? redirectUris,
+    List<String>? scopes,
   ]) =>
       Future.value(AuthenticatedApplication.mock());
 

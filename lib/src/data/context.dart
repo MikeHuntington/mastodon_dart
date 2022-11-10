@@ -7,16 +7,16 @@ part 'context.g.dart';
 /// https://docs.joinmastodon.org/entities/context/
 
 @JsonSerializable(
-  nullable: false,
+  
   createToJson: false,
   fieldRename: FieldRename.snake,
 )
 class Context {
   /// Parents in the thread
-  final List<Status> ancestors;
+  final List<Status>? ancestors;
 
   /// Children in the thread
-  final List<Status> descendants;
+  final List<Status>? descendants;
 
   Context({
     this.ancestors,

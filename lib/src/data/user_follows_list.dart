@@ -8,16 +8,16 @@ part 'user_follows_list.g.dart';
 /// https://docs.joinmastodon.org/entities/list/
 
 @JsonSerializable(
-  nullable: false,
+  
   createToJson: false,
   fieldRename: FieldRename.snake,
 )
 class UserFollowsList {
   /// The internal database ID of the lis
-  final String id;
+  final String? id;
 
   /// The user-defined title of the list
-  final String title;
+  final String? title;
 
   UserFollowsList({this.id, this.title});
 

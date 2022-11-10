@@ -7,22 +7,22 @@ part 'activity.g.dart';
 /// https://docs.joinmastodon.org/entities/activity/
 
 @JsonSerializable(
-  nullable: false,
+  
   createToJson: false,
   fieldRename: FieldRename.snake,
 )
 class Activity {
   /// Midnight at the first day of the week
-  final DateTime week;
+  final DateTime? week;
 
   /// Statuses created since the week began
-  final int statuses;
+  final int? statuses;
 
   /// User logins since the week began
-  final int logins;
+  final int? logins;
 
   /// User registrations since the week began
-  final int registrations;
+  final int? registrations;
 
   Activity({
     this.week,
